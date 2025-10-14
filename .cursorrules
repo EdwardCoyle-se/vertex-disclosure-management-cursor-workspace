@@ -1,0 +1,187 @@
+# Vertex Cursor Templates - AI Assistant Rules
+
+You are working with the Vertex Cursor Templates repository, which provides templates and patterns for building Vertex sustainability platform applications.
+
+## Repository Purpose
+This repository contains:
+1. **ProductDesign/** - PRD and TDD templates for requirements gathering
+2. **DotNet_Angular/** - Complete architecture templates for .NET + Angular applications
+3. **docs/** - Comprehensive coding standards, patterns, and examples
+
+## Architecture Understanding
+All Vertex applications follow a three-tier architecture:
+- **Angular Frontend** (`vertex-[domain]-ui`) - Uses @se-sustainability-business/vertex-ui-shared
+- **BFF Service** (`vertex-[domain]-bff`) - Backend-for-Frontend with data transformation
+- **Core API** (`vertex-[domain]-api`) - Domain CRUD operations with Clean Architecture
+
+## Key Technologies
+- **Frontend**: Angular 20+ standalone components, TailwindCSS, vertex-ui-shared
+- **Backend**: .NET 8, Clean Architecture, CQRS with MediatR, Entity Framework Core
+- **Database**: SQL Server with DbUp migrations
+- **Authentication**: OAuth2/OIDC via vertex-dotnet-api-sdk
+- **Testing**: Jest (frontend), xUnit (backend), integration tests
+
+## Coding Standards
+- Follow Clean Architecture principles with strict layer separation
+- Use CQRS pattern for all business operations (Commands/Queries via MediatR)
+- Implement Repository pattern with Entity Framework
+- Use dependency injection with installer pattern
+- Apply FluentValidation for input validation
+- Use date-based API versioning (e.g., "2025-07-17")
+
+## Naming Conventions
+- **Namespaces**: `SE.Sustainability.Vertex.[Domain].[Layer]`
+- **Projects**: `vertex-[domain]-ui`, `vertex-[domain]-bff`, `vertex-[domain]-api`
+- **Classes**: PascalCase, descriptive names
+- **Methods**: PascalCase with async suffix for async methods
+- **Variables**: camelCase
+- **Database**: Pluralized table names (e.g., InventoryItems)
+
+## When Creating New Projects
+1. **Use Master Prompt** from ProductDesign/MASTER_PROMPT.md for complete workflow
+2. **Follow Implementation Order** Core API → BFF → Frontend
+3. **Create Progress Tracking** Use templates in docs/PROGRESS_TEMPLATES/
+4. **Start with templates** from DotNet_Angular/ directory
+5. **Replace placeholders** consistently (Template → Domain, template → domain)
+6. **Follow project structure** as shown in docs/examples/EXAMPLE_PROJECT_STRUCTURE.md
+7. **Use common patterns** from docs/examples/COMMON_PATTERNS.md
+8. **Reference coding standards** in docs/CODING_STANDARDS.md
+9. **Reference design system** for all new patterns and components in docs/DESIGN_SYSTEM.md
+
+## Key Files to Reference
+- `README.md` - Repository overview and quick start
+- `docs/DESIGN_SYSTEM.md` - Rules for building UI
+- `docs/CODING_STANDARDS.md` - Detailed coding conventions
+- `docs/ARCHITECTURE_GUIDE.md` - System architecture patterns
+- `docs/PROJECT_CREATION_GUIDE.md` - Step-by-step project creation
+- `docs/examples/COMMON_PATTERNS.md` - Implementation examples
+- `docs/examples/EXAMPLE_PROJECT_STRUCTURE.md` - Complete project layout
+
+## Domain Identification
+When working with new features:
+1. Identify a single, lowercase domain name (e.g., 'inventory', 'reporting')
+2. Use consistently across all projects: vertex-[domain]-ui, vertex-[domain]-bff, vertex-[domain]-api
+3. Replace all Template references with the proper domain name
+
+## Error Handling
+- Use consistent error responses across APIs
+- Implement proper exception handling in controllers
+- Use structured logging with correlation IDs
+- Return appropriate HTTP status codes
+
+## Security Requirements
+- Always implement authentication/authorization
+- Validate all inputs server-side
+- Use HTTPS for all communications
+- Never log sensitive information
+- Implement CORS properly
+
+## Testing Strategy
+- Write unit tests for handlers and validators
+- Create integration tests for API endpoints
+- Implement E2E tests for critical user flows
+- Maintain high test coverage (>80%)
+
+## 🚨 CRITICAL RULES - NEVER VIOLATE THESE
+
+### 🎨 Frontend Development - MANDATORY REQUIREMENTS
+**CRITICAL**: When creating Angular UIs, you MUST ALWAYS follow the component hierarchy described below. NEVER create custom UI components that duplicate existing shared functionality.  ALWAYS reference the design system document for guidelines on how to implement.
+
+**REQUIRED COMPONENT HIERARCHY (USE IN THIS ORDER):**
+1. `@se-sustainability-business/vertex-ui-shared` components (ALWAYS FIRST)
+2. Quartz components (if vertex-ui-shared doesn't have it)
+3. Custom reusable components (LAST RESORT - document in CUSTOM_COMPONENTS.md)
+
+**REQUIRED IMPORTS FROM VERTEX-UI-SHARED:**
+- Use `@se-sustainability-business/vertex-ui-shared/button` for all buttons
+- Use `@se-sustainability-business/vertex-ui-shared/table` for all data tables  
+- Use `@se-sustainability-business/vertex-ui-shared/form-field` for all form fields
+- Use `@se-sustainability-business/vertex-ui-shared/input` for all text inputs
+- Use `@se-sustainability-business/vertex-ui-shared/select` for all dropdowns
+- Use `@se-sustainability-business/vertex-ui-shared/checkbox` for all checkboxes
+- Use `@se-sustainability-business/vertex-ui-shared/translate` for ALL translations and user-facing text
+
+**CUSTOM COMPONENT REQUIREMENTS (IF NEITHER LIBRARY HAS IT):**
+- MUST create in `src/app/shared/components/` as reusable components
+- MUST include TypeScript interfaces for inputs/outputs
+- MUST include Storybook stories
+- MUST document in `CUSTOM_COMPONENTS.md` for potential vertex-ui-shared promotion
+
+**REQUIRED TRANSLATION USAGE:**
+- ALL user-facing text MUST use `{{ 'module.key' | translate }}`
+- Translation keys MUST follow format: `module.key` (e.g., 'inventory.title', 'shared.save')
+- ALWAYS import TranslatePipe: `import { TranslatePipe } from '@se-sustainability-business/vertex-ui-shared/translate'`
+- Translation files MUST be in `public/i18n/en.json` and alphabetically sorted
+
+**REQUIRED ACCESSIBILITY COMPLIANCE:**
+- ALL applications MUST meet WCAG 2.1 AA accessibility standards
+- ALWAYS configure ESLint with `...angular.configs.templateAccessibility`
+- ALWAYS install and configure `@storybook/addon-a11y` for real-time testing
+- ALWAYS use axe DevTools browser extension for manual testing
+- ALWAYS include proper ARIA attributes: `role`, `aria-expanded`, `aria-disabled`, etc.
+- ALWAYS ensure keyboard navigation works for all interactive elements
+
+**FORBIDDEN**: 
+- ❌ NEVER create custom components when vertex-ui-shared or Quartz has them
+- ❌ NEVER use raw HTML buttons, inputs, or form elements directly in templates
+- ❌ NEVER duplicate functionality that exists in vertex-ui-shared or Quartz
+- ❌ NEVER use third-party UI libraries (Material, PrimeNG, etc.)
+- ❌ NEVER create one-off HTML structures scattered throughout component templates
+- ❌ NEVER use hardcoded strings for user-facing text
+- ❌ NEVER create custom translation pipes or services
+- ❌ NEVER use translation keys without module prefixes
+- ❌ NEVER bypass ESLint accessibility rules with eslint-disable
+- ❌ NEVER create interactive elements without keyboard support
+- ❌ NEVER use tabindex values other than -1 or 0
+- ❌ NEVER skip accessibility testing with axe DevTools
+
+### 🗄️ Backend Development - MANDATORY REQUIREMENTS  
+**CRITICAL**: When creating .NET entities, you MUST ALWAYS inherit from vertex-dotnet-api-sdk base classes.
+
+**REQUIRED BASE CLASSES:**
+- Use `NamedEntityBase` for entities with Name property (most common)
+- Use `EntityBase` for entities without Name but need full audit tracking  
+- Use `MinimalEntityBase` for simple entities with minimal tracking
+- Use `IEFRepository<TEntity>` for ALL repository interfaces
+
+**FORBIDDEN**:
+- ❌ NEVER create entities without base class inheritance
+- ❌ NEVER create custom repository patterns outside IEFRepository
+- ❌ NEVER implement manual audit fields (use base classes)
+
+### 💾 Database Migration - MANDATORY REQUIREMENTS
+**CRITICAL**: You MUST ALWAYS use DbUp for database migrations. NEVER use Entity Framework Core migrations.
+
+**REQUIRED MIGRATION APPROACH:**
+- Use DbUp with embedded SQL scripts in DBMigrations/ folder in Infrastructure project
+- Create date-specific subdirectories: DBMigrations/yyyymmdd/ (e.g., DBMigrations/20250822/)
+- Script naming: 001-<DBAction>.sql, 002-<DBAction>.sql (incremental within date folder)
+- Example: DBMigrations/20250822/001-CreateInventoryTable.sql
+- Use SqlMigrationHandler from templates
+- Run migrations via `dotnet [app].dll run-migrations`
+
+**FORBIDDEN**:
+- ❌ NEVER use `dotnet ef migrations add`
+- ❌ NEVER use `dotnet ef database update`
+- ❌ NEVER use Entity Framework Core migration commands
+- ❌ NEVER create DbContext migrations
+
+### 📁 Project Structure - MANDATORY REQUIREMENTS
+**CRITICAL**: You MUST ALWAYS follow the three-tier architecture pattern.
+
+**REQUIRED STRUCTURE:**
+- `vertex-[domain]-ui` (Angular Frontend)
+- `vertex-[domain]-bff` (Backend-for-Frontend) 
+- `vertex-[domain]-api` (Core CRUD API)
+
+**FORBIDDEN**:
+- ❌ NEVER create monolithic applications
+- ❌ NEVER bypass the BFF layer 
+- ❌ NEVER have UI communicate directly with Core API
+
+## Remember
+- This repository is designed to provide complete context for building Vertex applications
+- Always refer to the latest templates and established patterns
+- Maintain consistency across the platform
+- Update documentation when adding new patterns or examples
+- REVIEW THE CRITICAL RULES ABOVE BEFORE EVERY IMPLEMENTATION

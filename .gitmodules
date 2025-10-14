@@ -1,0 +1,9 @@
+[submodule "DotNet_Angular/vertex-dotnet-api-sdk"]
+	path = DotNet_Angular/vertex-dotnet-api-sdk
+	url = https://github.com/SE-Sustainability-Business/vertex-dotnet-api-sdk.git
+[submodule "DotNet_Angular/vertex-ui-shared"]
+	path = DotNet_Angular/vertex-ui-shared
+	url = https://github.com/SE-Sustainability-Business/vertex-ui-shared.git
+[submodule "DotNet_Angular/vertex-ui-template"]
+	path = DotNet_Angular/vertex-ui-template
+	url = https://github.com/SE-Sustainability-Business/vertex-ui-template.git

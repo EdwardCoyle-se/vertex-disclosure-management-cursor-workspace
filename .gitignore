@@ -1,0 +1,3 @@
+# JetBrains IDEs (IntelliJ IDEA, WebStorm, etc.)
+.idea/
+*.user

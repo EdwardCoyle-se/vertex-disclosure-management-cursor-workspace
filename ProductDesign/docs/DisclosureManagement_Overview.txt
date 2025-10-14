@@ -1,0 +1,198 @@
+Disclosure Management - Overview
+Epic		
+Document status	DISCOVERY	
+Document/ Project owner	Hannah Humm
+•	@username
+Business Analyst	Joe Dininger
+•	@username
+Tech lead	Mike Sawayda
+•	@username
+Tech Team	Indicator Management	
+T-shirt Sizing	TBD	
+Table of Contents
+Problem Statement
+ What is a "Problem Statement"? 
+A "Problem Statement" is a concise description of an issue to be addressed or a condition to be improved upon. It identifies the gap between the current (problem) state and desired (goal) state of a process or product. Within the context of project management and business analysis, a problem statement is a critical component because it:
+•	Clarifies the problem: It articulates the problem clearly for all stakeholders to understand what needs to be solved.
+•	Defines the scope: It helps to define the boundaries of the problem, what is included and what is not, to focus the team's efforts.
+•	Guides the team: It serves as a reference point for the project team throughout the project lifecycle, ensuring that the focus remains on addressing the core issue.
+•	Informs decision-making: It provides a basis for making decisions about project priorities, resources, and solutions.
+•	Sets the stage for solution development: It helps in brainstorming and developing potential solutions by understanding the problem in detail.
+A well-crafted problem statement typically includes the following elements:
+1.	Description of the problem: A clear and specific description of the problem, including any relevant data or statistics.
+2.	Impact of the problem: Explanation of how the problem affects stakeholders, processes, or the business.
+3.	Root cause analysis: An analysis of the underlying causes of the problem.
+4.	Desired outcome: A statement of what a successful solution would achieve.
+Creating an effective problem statement often involves answering key questions such as:
+•	What is the problem?
+•	Who does it affect?
+•	Where does it occur?
+•	When does it occur?
+•	Why is it important to solve?
+By addressing these questions, a problem statement ensures that everyone involved has a common understanding of the issue at hand and what the project aims to achieve.
+Description of the problem
+The ESG ecosystem does not contain the ability to fully complete a disclosure report (RFI). We have primarily focused on the capture of data into Indicator Management. Now we need a way to make sure that data is utilized within a disclosure report, as well as giving a user the ability to complete the parts of the disclosure report that are not covered by Indicator Management.
+Impact of the problem
+•	Losing sales over not having disclosure management solution
+•	Users not able to do full disclosure reporting
+•	Only a third of the problem is solved with IM solution
+Root cause
+•	Primary focus on the data collection side
+•	Built original system on “Flexible” data collection for all types of frameworks
+Desired Outcome
+•	Build a platform that allows users to pick a framework and build a RFI/Disclosure report
+•	Re-use captured data from IM
+•	Allow users to complete the rest of the Disclosure questions that are not handled in IM
+•	Export that document into a usable structure for client
+Value Prop
+•	Closes backend reporting gap that exists in IM
+•	ESG platform covers 2/3rds of major requirements for effective disclosure reporting
+Frameworks
+Framework	Primary Approach	Notes
+CDP	Questionnaire	Rigid survey-based format
+Mostly fixed fields (yes/no, multiple choice, numeric), plus text boxes
+Limited to predefined boxes per question
+CSRD/ESRS	Hybrid but mainly Document Editor	1.	Narrative-driven for context and qualitative disclosures
+2.	Structured and tagged for data-driven elements
+XHTML/iXBRL required; both narrative and structured data
+SEC Climate Rule	Document Editor	Narrative disclosures in 10-K/20-F, with some XBRL tagging
+1.	Disclosures are filed in narrative sections of Form 10-K or 20-F, under items like “Risk Factors,” “Business,” and “MD&A.”
+2.	The content must follow structured requirements (e.g., climate-related risks, governance, risk management, and metrics), but it is not submitted via a standardized questionnaire.
+3.	Climate disclosures will be included in HTML/iXBRL format, integrated into annual filings.
+4.	GHG emissions (Scope 1 and 2) may need to be disclosed (with assurance for large filers), typically as tables embedded within a narrative document.
+California – SB 253	Questionnaire	Disclosure format hasn’t been finalized, but likely to involve:
+1.	Structured data submission to a public digital platform (under development).
+2.	Third-party assurance required (limited then reasonable).
+3.	In practice, companies will use questionnaire/survey tools internally to collect emissions data, but the final submission is expected to be a report or structured form.
+California – SB 261	Document Editor	TCFD-style narrative reporting; companies must publish standalone report or incorporate into existing ESG reports
+This is a document editor approach, similar to CSRD or TCFD.
+GRI	Document Editor	Flexible narrative disclosures
+Unlike CDP, GRI does not require responses in a fixed survey format. Instead, it expects entities to compile a sustainability report (often a PDF or webpage) that aligns with its disclosure requirements.
+GRI provides a Content Index structure, which must list where in the report each disclosure is addressed — this is more about mapping content than filling in predefined fields.
+GRESB	Questionnaire	Questionnaire (with supporting documentation uploads)
+Mix of numeric inputs, checkboxes, and document uploads
+GRESB is structured like CDP but with slightly more flexibility — especially through supporting documents and narrative fields for policies and governance.
+Use Cases
+ What is a "Use Case"? 
+A "Use Case" is a tool used in product management and business analysis to describe a system's behavior as it responds to a request from one of its stakeholders, typically a user or another system. It outlines a series of actions or event steps, typically defining the interactions between a role (known in UML as an "actor") and a system, to achieve a goal. The actor can be a human or another system.
+Use cases have several key components and characteristics:
+1.	Actor: The user or another system that interacts with the system to achieve a goal.
+2.	System: The specific application, process, or product being analyzed or designed.
+3.	Goal: The end result that the actor aims to achieve through the use case.
+4.	Preconditions: The state of the system before the use case begins.
+5.	Postconditions: The state of the system after the use case completes, assuming everything has gone as expected.
+6.	Main Success Scenario (Basic Flow): The step-by-step process that describes the standard sequence of events that occur during a successful interaction.
+7.	Extensions (Alternative Flows): These capture the less common user interactions or exceptions that can occur, which deviate from the main flow.
+8.	Trigger: The event that initiates the use case.
+Use cases are important for several reasons:
+•	User-Centric: They focus on the user's perspective and are useful in ensuring that the system's functionality aligns with user needs and requirements.
+•	Communication Tool: They serve as a communication bridge between stakeholders, including clients, managers, developers, and testers, to ensure a common understanding of system requirements.
+•	Problem-Solving: They help identify potential problems in system or product design by walking through every step of a process.
+•	Documentation: They provide a documented basis for making project decisions, setting the scope for development, and planning for future stages of the project.
+In practice, use cases are often documented in a use case diagram or written descriptions, which can be part of the requirements documentation in software development projects.
+Use Case 01
+Name	
+Goal	
+Description	
+System	
+Actor	
+Preconditions	
+Basic Flow	
+Alternative Flows	
+Trigger	
+Diagram	
+User Personas
+Persona	Needs
+(problems / issues / pains / wants / objectives)	Outcomes
+(benefits)	Solution 
+(features / other attributes)
+VP of Sustainability	•	Access accurate/reliable data quickly across the globe
+•	Share data with leadership/stakeholders
+•	increasing frequency of reporting requests
+•	increasing number of frameworks to report to	•	quick views of esg data organized by framework requirements
+•	easy sharing
+•	easy to see data gaps
+•	easy to customize fields and timeframe
+•	can be for a single entity or the global/corporate level	
+	•	•	 
+•
+High Level Requirements
+ What is a High Level Requirement? 
+A high-level requirement is a broad, abstract statement that defines the main objectives, functions, or goals that a project, system, or product must fulfill. These requirements are typically part of the initial stages of the planning and analysis phase in project management and software development. They provide a general direction and scope for the project without delving into the specific details of implementation.
+High-level requirements often include:
+•	Business Objectives: The overarching goals that the organization aims to achieve with the project or product.
+•	User Needs: General statements about what users expect from the product or system.
+•	System Functionality: A summary of the key functions the system must perform.
+•	Performance Metrics: Broad criteria for how the system's performance will be measured.
+•	Constraints: Any high-level limitations or boundaries within which the project must be developed, such as budget, time, regulations, and technology constraints.
+•	Quality Attributes: General characteristics related to the quality of the system, such as reliability, scalability, and usability.
+Characteristics of high-level requirements include:
+•	Broad and strategic: They are not detailed but provide a clear direction for the project.
+•	Stakeholder-focused: They are derived from the needs and goals of stakeholders, ensuring that the project aligns with business objectives.
+•	Prioritized: They help in setting priorities for what the project must achieve.
+•	Guiding: They guide subsequent detailed analysis and the development of lower-level, more specific requirements.
+High-level requirements are essential because they:
+•	Serve as a foundation for developing more detailed functional and non-functional requirements.
+•	Help to communicate the vision and scope of the project to all stakeholders.
+•	Provide a basis for estimating costs and timelines.
+•	Enable the identification of potential risks early in the project lifecycle.
+As the project progresses, these high-level requirements are broken down into more detailed requirements that specify the exact functionalities, features, and specifications needed to meet the high-level objectives.
+1.	Set permissions on Disclosure Management
+2.	Expand Framework Library to have a “Questionnaire” section
+3.	Allow users to add additional information into Frameworks/questionnaires
+4.	Create a report from an existing framework or questionnaire
+1.	Report questions built from the Disclosures related to them
+5.	Add metadata to the report
+6.	Assign users to workflows on the report
+7.	Create workflows for data entry
+8.	Create a connection between the report and Indicator Management (other external locations)
+9.	Data capture in the report is facilitated through mapped values using framework codes (or LLM solution?)
+10.	LLM qualitative creation in report
+11.	Each value will have a data lineage modal
+12.	Each value will have contextual information in a flyout
+13.	Integrate Disclosure management on top of Indicator Management (but create it as a separate platform)
+________________________________________
+Additional Documentation
+Mocks
+Document Name	Link to Document
+Low Fidelity Mocks	https://balsamiq.cloud/shugd5y/ps2sbq6/rE530
+
+High Fidelity Mocks	
+Diagrams
+Document Name	Link to Document
+Product Model Diagram	Link
+
+	
+Meeting Notes
+Meeting Date	Description	Link to Document
+		
+		
+Additional Documentation
+Examples may include mapping docs, user lists, example test scenarios,
+Document Name	Description	Link to Document
+Functionality Matrix	A listing of high level requirements for the overarching product	Disclosure Management Functionality Matrix.xlsx
+
+Alisdair Mocks/Competitor Analysis	Alisdair’s interpretation of what is necessary for this product. Also includes some competitor workflow analysis	https://miro.com/app/board/uXjVPtDb0-o=/
+
+Hannah Analysis	Hannah’s competitor analysis and high level requirements.	https://miro.com/app/board/uXjVLI1CBJ8=/?moveToWidget=3458764613220543946&cot=14
+
+Structural Roadblocks	We currently have several structural roadblocks in place that we need to solve. This document outlines some of the issues and potential solutions	Link
+
+Questionnaire Example	An example of a custom questionnaire that would need to be entered within the platform	 
+________________________________________
+Questions
+Question	Question For	Status	Answered by	Answered on	Outcome
+In disclosure management, does it make more sense to do “Overwrite” functionality here? 
+
+- Joe thinks yes. Mainly because it doesn’t impact the underlying data or aggregations. It is essentially a single instance of changing the value and doesn’t have downstream consequences. It can be audited and pertains to a single report that is going out the door					
+Do we need to refactor Framework Library to make this work in the best way possible?					
+Are we completely reliant on Agentic solutions for some of this? What if that piece isn’t finished early on? Do we contingency plan for it?					
+Where do we put assessments that aren’t frameworks? Should they come first? Or second? Or in parallel?					
+Do we need to change the way versioning in Framework Library works?
+Today versioning happens on a standard basis, not on the overarching framework. So, a disclosure report might be using some old data if standards are not published appropriately into new versions. Or, an update might happen mid report. Does that change the information in the disclosure report? Or is it only at the time of creation? It’s hard for an auditor to look at the framework library and understand what the report SHOULD have looked like at a certain point in time.					
+Epics
+Write any epics associated with this feature here. Provide a description for easier tracking of functionality at later dates.
+Epic Name	Description	Estimated Size	Estimated Release
+			
+			
+________________________________________
