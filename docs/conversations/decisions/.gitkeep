@@ -1,0 +1,13 @@
+# Architecture & Design Decisions
+
+This directory contains documentation of significant decisions made during conversations.
+
+These complement the formal ADRs in `/docs/adr/` by capturing:
+- Informal design discussions
+- Implementation approach decisions
+- Tool and technology choices
+- Patterns and conventions established
+
+Examples:
+- `2024-10-14-component-hierarchy-decision.md`
+- `2024-10-15-data-flow-patterns.md`
