@@ -82,6 +82,20 @@ When working with new features:
 - Implement E2E tests for critical user flows
 - Maintain high test coverage (>80%)
 
+## PowerShell Script Standards
+**CRITICAL**: When creating PowerShell scripts (`.ps1` files):
+- ❌ NEVER use emojis or special Unicode characters (✓, ✗, 🚀, etc.)
+- ✅ ALWAYS use plain text alternatives: `[OK]`, `[ERROR]`, `[INFO]`, `[WARNING]`
+- ✅ Use standard ASCII characters only for maximum compatibility
+- ✅ Test scripts in PowerShell 7+ on Windows
+- **Reason**: Emojis cause parsing errors in PowerShell due to encoding issues
+
+**Examples:**
+- ❌ BAD: `Write-Host "✓ Success" -ForegroundColor Green`
+- ✅ GOOD: `Write-Host "[OK] Success" -ForegroundColor Green`
+- ❌ BAD: `Write-Host "✗ Failed" -ForegroundColor Red`
+- ✅ GOOD: `Write-Host "[ERROR] Failed" -ForegroundColor Red`
+
 ## 🚨 CRITICAL RULES - NEVER VIOLATE THESE
 
 ### 🎨 Frontend Development - MANDATORY REQUIREMENTS
@@ -165,6 +179,66 @@ When working with new features:
 - ❌ NEVER use `dotnet ef database update`
 - ❌ NEVER use Entity Framework Core migration commands
 - ❌ NEVER create DbContext migrations
+
+**SQL SERVER TEMPORAL TABLES - MANDATORY REQUIREMENTS**:
+When modifying temporal tables in migrations, you MUST follow this exact pattern:
+1. Turn OFF system versioning: `ALTER TABLE [dbo].[TableName] SET (SYSTEM_VERSIONING = OFF)`
+2. Add columns to MAIN table
+3. Add columns to HISTORY table (with MATCHING definitions - same type, length, nullability)
+4. Turn system versioning back ON: `ALTER TABLE [dbo].[TableName] SET (SYSTEM_VERSIONING = ON (HISTORY_TABLE = [schema].[TableName_History]))`
+5. Use DYNAMIC SQL for any UPDATE/SELECT statements that reference new columns
+
+**CRITICAL SQL PATTERNS**:
+- ❌ NEVER reference new columns directly in UPDATE/INSERT/SELECT in same migration
+- ✅ ALWAYS use dynamic SQL (`DECLARE @sql NVARCHAR(MAX) = N'...'; EXEC sp_executesql @sql;`) for operations on new columns
+- ✅ ALWAYS verify history table name with: `SELECT SCHEMA_NAME(h.schema_id) + '.' + h.name FROM sys.tables t LEFT JOIN sys.tables h ON t.history_table_id = h.object_id WHERE t.name = 'TableName'`
+- ✅ ALWAYS use IF NOT EXISTS checks for columns, indexes, and constraints
+- ✅ ALWAYS include PRINT statements for each migration step
+- ✅ ALWAYS wrap migrations in BEGIN TRANSACTION/COMMIT TRANSACTION
+
+**EMBEDDED RESOURCE CACHING**:
+- ✅ ALWAYS Clean + Rebuild the Infrastructure.SqlServer project after changing migration scripts
+- ✅ ALWAYS use `.\scripts\run-core-api-migrations.ps1 -Clean` flag when migration scripts were edited
+- Migration scripts are embedded resources and can be cached by MSBuild/Visual Studio
+
+**DIAGNOSTIC VERIFICATION**:
+After running migrations, ALWAYS verify with diagnostic script:
+```powershell
+.\scripts\run-database-diagnostic.ps1
+```
+
+**TROUBLESHOOTING RESOURCES**:
+See detailed troubleshooting guides:
+- [DbUp Migrations](docs/troubleshooting/DBUP-MIGRATIONS.md)
+- [Diagnostic Scripts](docs/troubleshooting/DIAGNOSTIC-SCRIPTS.md)
+
+### 🔧 NuGet Configuration - MANDATORY REQUIREMENTS
+**CRITICAL**: You MUST use correct NuGet feed URLs for SE-Sustainability-Business packages.
+
+**REQUIRED CONFIGURATION**:
+- ✅ ALWAYS use GitHub Packages: `https://nuget.pkg.github.com/SE-Sustainability-Business/index.json`
+- ❌ NEVER use Azure DevOps feeds: `https://pkgs.dev.azure.com/SchneiderElecOne/...`
+
+**NUGET.CONFIG LOCATION**:
+- BFF projects: `service/NuGet.config` (solution-level)
+- Core API: Uses global NuGet.config
+
+**LOCAL PACKAGE DEVELOPMENT**:
+When developing Core API SDK changes used by BFF:
+```xml
+<!-- Add to NuGet.config -->
+<add key="LocalPackages" value="../../LocalPackages" />
+
+<!-- Mark in .csproj with comments -->
+<!-- LOCAL DEV: Using local package from ../../../LocalPackages (ESG-XXXXX) -->
+<!-- PRODUCTION: Change to published version when available -->
+<PackageReference Include="Package.Name" Version="1.0.0" />
+```
+
+**TROUBLESHOOTING**:
+- Clear cache: `dotnet nuget locals all --clear`
+- See: [NuGet Configuration Guide](docs/troubleshooting/NUGET-CONFIGURATION.md)
+- See: [Local NuGet Packages Guide](docs/troubleshooting/LOCAL-NUGET-PACKAGES.md) - For building local SDK packages
 
 ### 📁 Project Structure - MANDATORY REQUIREMENTS
 **CRITICAL**: You MUST ALWAYS follow the three-tier architecture pattern.

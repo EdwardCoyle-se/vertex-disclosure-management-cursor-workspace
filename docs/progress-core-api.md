@@ -136,12 +136,83 @@
 - Swagger documentation grouped by version
 - Backward compatibility maintained for at least 12 months
 
+### Phase 9: Manual Publish Workflow (ESG-13441)
+**Added**: 2024-10-15  
+**Status**: ✅ Completed  
+**Purpose**: Enable manual publishing of reports with locking mechanism and framework version validation
+
+#### Database Changes
+- [x] ✅ Create DbUp migration (DBMigrations/20251015/001-AddPublishFields.sql)
+- [x] ✅ Add `PublishedDate` column to Reports table (DATETIME2 NULL)
+- [x] ✅ Add `PublishedByUserId` column to Reports table (NVARCHAR(54) NULL)
+- [x] ✅ Add `IsLocked` column to Reports table (BIT NOT NULL DEFAULT 0)
+- [x] ✅ Convert existing `Status` values to lowercase for consistency
+- [x] ✅ Set `IsLocked = 1` for existing 'published' reports
+- [x] ✅ Create filtered index on `PublishedDate` for performance
+
+#### Entity and Model Updates
+- [x] ✅ Update `ReportEntity` with new publish-related properties
+- [x] ✅ Configure EF Core mappings with PascalCase column names
+- [x] ✅ Update `Report` API model with XML documentation
+- [x] ✅ Update entity mappers to include new fields
+
+#### Business Logic (CQRS)
+- [x] ✅ Create `PublishReportRequest` and `PublishReportResponse` classes
+- [x] ✅ Create `ValidateFrameworkVersionRequest` and `FrameworkVersionValidation` classes
+- [x] ✅ Implement `PublishReportHandler` with validation logic
+- [x] ✅ Implement `ValidateFrameworkVersionHandler` for version checks
+- [x] ✅ Create `PublishReportValidator` using FluentValidation
+- [x] ✅ Add business rules: check if already published, validate framework version
+- [x] ✅ Implement status update to 'published' (lowercase)
+- [x] ✅ Set `IsLocked = true` and populate audit fields
+
+#### API Endpoints
+- [x] ✅ Add `POST /reports/{reportId}/publish` endpoint
+  - Request body: `{ userId, currentFrameworkVersion }`
+  - Response: `{ success, report, frameworkVersionMismatch, latestFrameworkVersion, errorMessage }`
+- [x] ✅ Add `GET /reports/{reportId}/validate-framework-version` endpoint
+  - Query param: `currentFrameworkVersion`
+  - Response: `{ isValid, currentVersion, latestVersion, requiresUpdate, errorMessage }`
+- [x] ✅ Implement proper error handling for already-published reports
+- [x] ✅ Implement proper error handling for report-not-found scenarios
+- [x] ✅ Add comprehensive logging for debugging
+
+#### API SDK Updates
+- [x] ✅ Update `IDisclosureManagementApi` Refit interface with new methods
+- [x] ✅ Add `PublishReportAsync(string reportId, PublishReportRequestDto request)`
+- [x] ✅ Add `ValidateFrameworkVersionAsync(string reportId, string currentFrameworkVersion)`
+- [x] ✅ Create `PublishReportRequestDto` class
+
+#### Database Migration & Troubleshooting
+- [x] ✅ Create migration script `001-AddPublishFields.sql`
+- [x] ✅ Handle SQL Server temporal tables (system versioning)
+- [x] ✅ Fix dynamic SQL for parse-time validation issues
+- [x] ✅ Correct history table name (`history.Reports_History`)
+- [x] ✅ Match nullability for `IsLocked` in main and history tables
+- [x] ✅ Create diagnostic script `diagnose-database-schema.sql`
+- [x] ✅ Create PowerShell automation `run-core-api-migrations.ps1`
+- [x] ✅ Create PowerShell diagnostic `run-database-diagnostic.ps1`
+- [x] ✅ Verify migration applied successfully
+- [x] ✅ Verify columns exist in database
+- [x] ✅ Verify indexes created
+- [x] ✅ Test Core API starts without 500 errors
+- [x] ✅ Document troubleshooting in `docs/troubleshooting/DBUP-MIGRATIONS.md`
+- [x] ✅ Document scripts in `docs/troubleshooting/DIAGNOSTIC-SCRIPTS.md`
+
+#### Testing & Validation
+- [ ] 📋 Unit tests for `PublishReportHandler`
+- [ ] 📋 Unit tests for `ValidateFrameworkVersionHandler`
+- [ ] 📋 Unit tests for `PublishReportValidator`
+- [ ] 📋 Integration tests for publish endpoints
+- [ ] 📋 Test framework version mismatch scenarios
+- [ ] 📋 Test concurrent publish attempts
+- [x] ✅ Manual testing with running Core API (no 500 errors)
+
 ## 🚀 Next Steps
-1. **Complete Core API implementation** with full CRUD operations and business logic
+1. **Complete Manual Publish testing** with unit and integration tests
 2. **Deploy to development environment** with CI/CD pipeline
-3. **Begin BFF service development** (depends on this service's APIs)
-4. **Integration testing with BFF** using Refit interfaces
-5. **Load testing** with realistic framework data volumes
+3. **Integration testing with BFF** using Refit interfaces
+4. **Load testing** with realistic framework data volumes
 
 ---
 

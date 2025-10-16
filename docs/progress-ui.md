@@ -334,15 +334,128 @@ export class AdminGuard implements CanActivate {
 ### ✅ **Completed Foundation (August 18, 2025)**
 - ✅ **Complete vertex-ui-shared integration** across all components
 - ✅ **Professional table sorting** with SortHeaderComponent
-- ✅ **Enhanced form UX** with proper styling and spacing  
+- ✅ **Enhanced form UX** with proper styling and spacing
 - ✅ **BFF architecture** fully operational with UI integration
 - ✅ **Technical debt resolution** (injection context, signal bindings)
+
+### Phase 11: Manual Publish Workflow (ESG-13441)
+**Added**: 2024-10-15  
+**Status**: ✅ Substantially Completed (Read-only enforcement pending)  
+**Purpose**: Enable manual publishing of reports with visual progress feedback and framework version handling
+
+#### Custom Components
+- [x] ✅ Create `vx-dm-progress-button` component
+  - Visual progress bar at bottom of button
+  - Dynamic color transitions (gray → blue → purple → green)
+  - Progress percentage display with translation support
+  - Loading state with spinner animation
+  - Full keyboard accessibility (WCAG 2.1 AA)
+  - Comprehensive unit tests (16 test cases)
+- [x] ✅ Document component in `CUSTOM_COMPONENTS.md`
+- [x] ✅ Export component from `shared/components/index.ts`
+
+#### Translation Keys
+- [x] ✅ Add `reports.workspace.publish.*` translations
+- [x] ✅ Add `reports.workspace.unpublish.*` translations  
+- [x] ✅ Add `reports.workspace.locked.*` translations
+- [x] ✅ Add `reports.workspace.optional-questions.*` translations
+- [x] ✅ Add framework mismatch dialog translations
+- [x] ✅ Add error message translations
+
+#### Service Layer
+- [x] ✅ Update `BffService` with publish methods
+  - `publishReport(reportId, userId, currentFrameworkVersion)` method
+  - `validateFrameworkVersion(reportId, currentFrameworkVersion)` method
+- [x] ✅ Update `ReportDetail` interface with publish fields
+  - `isLocked?: boolean`
+  - `publishedDate?: string`
+  - `publishedByUserId?: string`
+- [x] ✅ Implement error handling and RxJS operators
+
+#### Completion Calculation Logic
+- [x] ✅ Update `updateProgressAfterAnswerSave()` method
+- [x] ✅ Calculate completion based on **required questions only**
+- [x] ✅ Document calculation logic with clear comments
+- [x] ✅ Track both required and optional questions separately
+- [x] ✅ Update `ReportProgress` interface with new fields:
+  - `requiredQuestionsAnswered: number`
+  - `totalRequiredQuestions: number`
+
+#### Reports Workspace Integration
+- [x] ✅ Add publish section to workspace header
+- [x] ✅ Display required vs optional questions count
+- [x] ✅ Show optional questions indicator with tooltip
+- [x] ✅ Integrate `vx-dm-progress-button` component
+- [x] ✅ Show locked badge when report is published
+- [x] ✅ Add unpublish button (UI only, backend pending)
+- [x] ✅ Implement `isReportLocked()` helper method
+- [x] ✅ Implement `hasOptionalQuestions()` helper method
+- [x] ✅ Implement `getOptionalQuestionsCount()` helper method
+
+#### Confirmation Dialogs
+- [x] ✅ Implement publish confirmation dialog
+  - Warning theme with proper messaging
+  - Translatable title and content
+  - Cancel and confirm buttons
+- [x] ✅ Implement framework mismatch dialog
+  - Info theme for notification
+  - User-friendly explanation of framework update
+  - Update and cancel options
+- [x] ✅ Wire up dialog visibility signals
+- [x] ✅ Implement dialog event handlers
+
+#### Publish Workflow Logic
+- [x] ✅ Implement `onPublishClick()` - shows confirmation
+- [x] ✅ Implement `onPublishConfirmed()` - calls BFF API
+  - Extract user ID from auth context
+  - Get current framework version from report
+  - Call `bffSvc.publishReport()`
+  - Handle framework version mismatch
+  - Update workspace data on success
+  - Show success/error messages
+- [x] ✅ Implement `onPublishCancelled()` - hides dialog
+- [x] ✅ Implement `onFrameworkMismatchConfirmed()` - reloads workspace
+- [x] ✅ Implement `onFrameworkMismatchCancelled()` - hides dialog
+- [x] ✅ Implement `onUnpublishClick()` - placeholder for future
+
+#### Read-Only Enforcement (Partial)
+- [ ] 🚧 Add `isLocked` check to answer form components
+- [ ] 🚧 Disable all input fields when report is locked
+- [ ] 🚧 Show locked message in answer panel
+- [ ] 🚧 Prevent answer submission when locked
+- [ ] 🚧 Update `vx-dm-answer-form` component
+- [ ] 🚧 Update individual input components (text, select, etc.)
+- [ ] 🚧 Add visual indicators for locked state
+
+#### Testing & Quality
+- [x] ✅ Zero linter errors in all new code
+- [x] ✅ Unit tests for `vx-dm-progress-button` component
+- [x] ✅ Manual end-to-end testing with all three layers running
+- [x] ✅ Verify publish button appears and functions correctly
+- [x] ✅ Verify progress calculation for required questions
+- [ ] 📋 Automated E2E tests for publish workflow
+- [ ] 📋 Test framework mismatch scenario
+- [ ] 📋 Test locked report behavior
+- [ ] 📋 Accessibility audit for new UI elements
+
+#### Documentation
+- [x] ✅ Update `progress-ui.md` with implementation tasks
+- [x] ✅ Update `progress-bff.md` with BFF changes
+- [x] ✅ Update `progress-core-api.md` with backend changes
+- [x] ✅ Create ADR for Manual Publish Workflow
+- [x] ✅ Document `vx-dm-progress-button` in `CUSTOM_COMPONENTS.md`
+- [x] ✅ Create comprehensive troubleshooting guides:
+  - `docs/troubleshooting/DBUP-MIGRATIONS.md`
+  - `docs/troubleshooting/NUGET-CONFIGURATION.md`
+  - `docs/troubleshooting/DIAGNOSTIC-SCRIPTS.md`
+- [x] ✅ Update `.cursorrules` with migration and NuGet best practices
+- [x] ✅ Update `scripts/README.md` with troubleshooting links
 
 ---
 
 **Progress Legend:**
 - 📋 Pending
-- 🚧 In Progress  
+- 🚧 In Progress
 - ✅ Completed
 - ❌ Blocked
 - ⚠️ Needs Review

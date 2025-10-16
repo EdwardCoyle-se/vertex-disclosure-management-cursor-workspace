@@ -176,11 +176,65 @@ public interface IFrameworksCoreApi
 4. **Core API** → Validates token and applies organizational filtering
 5. **BFF** → Additional filtering and transformation based on user context
 
+### Phase 8: Manual Publish Workflow (ESG-13441)
+**Added**: 2024-10-15  
+**Status**: ✅ Completed  
+**Purpose**: Expose manual publish functionality with framework version validation and error handling
+
+#### Service Layer Updates
+- [x] ✅ Update `IDisclosureManagementCoreApiService` interface
+- [x] ✅ Add `PublishReportAsync(string reportId, string userId, string currentFrameworkVersion)` method
+- [x] ✅ Add `ValidateFrameworkVersionAsync(string reportId, string currentFrameworkVersion)` method
+- [x] ✅ Implement methods in `DisclosureManagementCoreApiService`
+- [x] ✅ Wire up calls to Core API SDK methods
+- [x] ✅ Implement error handling and logging
+
+#### BFF API Controllers
+- [x] ✅ Add `POST /reports/{reportId}/publish` endpoint to `ReportsController`
+- [x] ✅ Add `GET /reports/{reportId}/validate-framework-version` endpoint
+- [x] ✅ Extract user context from authentication for audit tracking
+- [x] ✅ Call Core API service methods with proper parameters
+- [x] ✅ Return 200 OK for framework mismatch (not 4xx) to allow client-side dialog
+- [x] ✅ Implement comprehensive error handling
+- [x] ✅ Add structured logging with correlation IDs
+
+#### Data Transformation
+- [x] ✅ Pass-through publish responses from Core API
+- [x] ✅ Include framework version mismatch flag in response
+- [x] ✅ Transform `ReportDetail` with new publish fields (`isLocked`, `publishedDate`, `publishedByUserId`)
+- [x] ✅ Update `ReportListItem` for list views (if needed)
+
+#### Error Handling
+- [x] ✅ Handle "already published" scenarios with clear messages
+- [x] ✅ Handle "report not found" with 404 responses
+- [x] ✅ Handle framework mismatch as successful response (200) with flag
+- [x] ✅ Handle Core API errors with proper HTTP status codes
+- [x] ✅ Return user-friendly error messages to frontend
+
+#### NuGet Configuration & Package Management
+- [x] ✅ Fix NuGet.config to use GitHub Packages feed
+- [x] ✅ Remove incorrect Azure DevOps feed URL
+- [x] ✅ Add local package source for development (`LocalPackages`)
+- [x] ✅ Update Core API SDK reference to version 1.0.0 (local)
+- [x] ✅ Test package restore with corrected configuration
+- [x] ✅ Verify BFF builds successfully
+- [x] ✅ Document NuGet setup in `docs/troubleshooting/NUGET-CONFIGURATION.md`
+- [ ] 📋 Update to published SDK version when available
+
+#### Testing & Validation
+- [ ] 📋 Unit tests for BFF service methods
+- [ ] 📋 Integration tests for publish endpoints
+- [ ] 📋 Test error scenarios (already published, not found, etc.)
+- [ ] 📋 Test framework version mismatch handling
+- [ ] 📋 Verify authentication/authorization enforcement
+- [x] ✅ Manual testing with Core API (no 500 errors)
+- [x] ✅ Verify BFF starts and responds correctly
+
 ## 🚀 Next Steps
-1. **Complete BFF implementation** with all data transformation logic
+1. **Complete Manual Publish testing** with unit and integration tests
 2. **Integration testing with Core API** including error scenarios
 3. **Deploy to development environment** with monitoring
-4. **Begin Frontend development** using BFF API contracts
+4. **Frontend integration** with publish workflows and dialogs
 5. **End-to-end testing** with realistic user scenarios
 6. **Performance optimization** based on frontend usage patterns
 
@@ -188,7 +242,7 @@ public interface IFrameworksCoreApi
 
 **Progress Legend:**
 - 📋 Pending
-- 🚧 In Progress  
+- 🚧 In Progress
 - ✅ Completed
 - ❌ Blocked
 - ⚠️ Needs Review

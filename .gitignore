@@ -1,3 +1,6 @@
 # JetBrains IDEs (IntelliJ IDEA, WebStorm, etc.)
 .idea/
 *.user
+
+# Local NuGet package repo output (automated by Cursor in some instances)
+DotNet_Angular/LocalPackages/
