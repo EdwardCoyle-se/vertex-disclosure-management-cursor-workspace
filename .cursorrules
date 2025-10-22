@@ -99,12 +99,18 @@ When working with new features:
 ## 🚨 CRITICAL RULES - NEVER VIOLATE THESE
 
 ### 🎨 Frontend Development - MANDATORY REQUIREMENTS
-**CRITICAL**: When creating Angular UIs, you MUST ALWAYS follow the component hierarchy described below. NEVER create custom UI components that duplicate existing shared functionality.  ALWAYS reference the design system document for guidelines on how to implement.
 
-**REQUIRED COMPONENT HIERARCHY (USE IN THIS ORDER):**
-1. `@se-sustainability-business/vertex-ui-shared` components (ALWAYS FIRST)
-2. Quartz components (if vertex-ui-shared doesn't have it)
-3. Custom reusable components (LAST RESORT - document in CUSTOM_COMPONENTS.md)
+ALWAYS reference `docs/DESIGN_SYSTEM.md` for detailed guidelines on how to implement components.
+
+**REQUIRED ASSET HIERARCHY**
+When creating Angular UIs, you MUST ALWAYS follow this hierarchy when retrieving assets from shared libraries in this order:
+1. `@se-sustainability-business/vertex-ui-shared` (ALWAYS FIRST)
+2. Quartz (if `vertex-ui-shared` doesn't provide)
+3. Custom reusable pieces in `src/shared` (LAST RESORT - document in CUSTOM_COMPONENTS.md)
+
+Always apply this strategy to:
+- Custom Components
+- Usage of color
 
 **REQUIRED IMPORTS FROM VERTEX-UI-SHARED:**
 - Use `@se-sustainability-business/vertex-ui-shared/button` for all buttons
@@ -116,16 +122,21 @@ When working with new features:
 - Use `@se-sustainability-business/vertex-ui-shared/translate` for ALL translations and user-facing text
 
 **CUSTOM COMPONENT REQUIREMENTS (IF NEITHER LIBRARY HAS IT):**
-- MUST create in `src/app/shared/components/` as reusable components
+- If component is used in multiple places, MUST create in `src/app/shared/components/` for future reuse.  If component is only used in a single place, place that component in a `components` subfolder within the desired `src/routes/:subroute` folder.
 - MUST include TypeScript interfaces for inputs/outputs
+- MUST create a standalone template file
+- If component has its own local CSS styles, MUST place these in a corresponding css file in the same folder, and create a `styleUrls` array in the Angular component referencing this new CSS file.
 - MUST include Storybook stories
-- MUST document in `CUSTOM_COMPONENTS.md` for potential vertex-ui-shared promotion
+- MUST document in `docs/CUSTOM_COMPONENTS.md` for potential vertex-ui-shared promotion
+- When utilizing color, NEVER add custom color choices without asking the user first.  ALWAYS try to use CSS variables from `vertex-ui-shared` or predefined tailwind color classes where colors need definition, and avoid adding custom color swatches.
 
 **REQUIRED TRANSLATION USAGE:**
 - ALL user-facing text MUST use `{{ 'module.key' | translate }}`
 - Translation keys MUST follow format: `module.key` (e.g., 'inventory.title', 'shared.save')
 - ALWAYS import TranslatePipe: `import { TranslatePipe } from '@se-sustainability-business/vertex-ui-shared/translate'`
-- Translation files MUST be in `public/i18n/en.json` and alphabetically sorted
+- Translation keys MUST be in `public/i18n/en.json` and alphabetically sorted.
+- Translation keys in `public/i18n/en.json` MUST NEVER be prefixed with the application key (e.g. `disclosure-management.`)
+- Translation keys used in templates MUST be prefixed with the application key (e.g. `disclosure-management.`) unless they are shared keys provided by `vertex-ui-shared`.
 
 **REQUIRED ACCESSIBILITY COMPLIANCE:**
 - ALL applications MUST meet WCAG 2.1 AA accessibility standards
@@ -138,7 +149,6 @@ When working with new features:
 **FORBIDDEN**: 
 - ❌ NEVER create custom components when vertex-ui-shared or Quartz has them
 - ❌ NEVER use raw HTML buttons, inputs, or form elements directly in templates
-- ❌ NEVER duplicate functionality that exists in vertex-ui-shared or Quartz
 - ❌ NEVER use third-party UI libraries (Material, PrimeNG, etc.)
 - ❌ NEVER create one-off HTML structures scattered throughout component templates
 - ❌ NEVER use hardcoded strings for user-facing text
