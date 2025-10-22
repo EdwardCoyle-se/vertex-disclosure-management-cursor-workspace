@@ -347,6 +347,117 @@ const tableConfig: VxDmTableConfig<ReportListItem> = {
 
 ---
 
+## VxDmConfirmationDialog
+
+- **Project**: vertex-ui-disclosure-management
+- **File**: `src/shared/components/vx-dm-confirmation-dialog/`
+- **Purpose**: Reusable modal confirmation dialog for destructive or important actions. Provides consistent confirmation UX with theme-based styling (danger, warning, info, default) and **full translation support** using vertex-ui-shared TranslatePipe. Created to replace scattered window.confirm() calls with accessible, branded dialog patterns.
+- **Created By**: AI Assistant
+- **Created Date**: 2024-10-14
+- **Updated Date**: 2024-10-16 (Added translation support)
+- **Reusability Score**: High
+- **Promotion Candidate**: Yes - This component provides essential confirmation dialog functionality that would benefit all Vertex applications
+- **Usage Count**: 2+ (Used for publish confirmation, framework mismatch warnings, document deletion, and will be used across the application)
+- **Dependencies**: Angular CommonModule, QuartzButtonComponent, VxDmTextTruncatorDirective, **TranslatePipe from vertex-ui-shared**
+- **Features**:
+  - **Full i18n translation support** - All text properties accept translation keys
+  - Theme-based styling (danger, warning, info, default) with appropriate icons
+  - Configurable button text and importance levels
+  - Processing/loading state with disabled interactions
+  - Backdrop click to cancel (disabled during processing)
+  - Keyboard accessibility (Esc to cancel, Enter/Space for interactions)
+  - File name truncation support with configurable placeholder (`{{fileName}}`)
+  - Screen reader accessible with proper ARIA attributes
+  - Smooth animations and transitions
+  - Consistent with Vertex UI design patterns
+  - Default translation keys: `shared.confirm`, `shared.cancel`, `shared.confirm-action`, `shared.confirm-proceed`
+
+### Code Example
+```typescript
+// Component TypeScript
+publishConfirmationConfig = signal<ConfirmationDialogConfig>({
+  title: 'disclosure-management.reports.workspace.publish.confirmation.title',
+  message: 'disclosure-management.reports.workspace.publish.confirmation.message',
+  theme: 'warning',
+  confirmButtonText: 'disclosure-management.reports.workspace.publish.confirmation.ok',
+  cancelButtonText: 'disclosure-management.reports.workspace.publish.confirmation.cancel',
+});
+```
+
+```html
+<!-- Component template usage -->
+<vx-dm-confirmation-dialog
+  [visible]="showPublishConfirmation()"
+  [config]="publishConfirmationConfig()"
+  (confirmed)="onPublishConfirmed()"
+  (cancelled)="onPublishCancelled()">
+</vx-dm-confirmation-dialog>
+```
+
+```json
+// Translation keys in en.json
+{
+  "disclosure-management": {
+    "reports": {
+      "workspace": {
+        "publish": {
+          "confirmation": {
+            "title": "Confirm Publish",
+            "message": "Publishing this report will lock all questions...",
+            "ok": "Publish Report",
+            "cancel": "Cancel"
+          }
+        }
+      }
+    }
+  },
+  "shared": {
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "confirm-action": "Confirm Action",
+    "confirm-proceed": "Are you sure you want to proceed?"
+  }
+}
+```
+
+### Visual Design
+- **Themes**:
+  - `danger`: Red icon/background, emphasized confirm button (delete actions)
+  - `warning`: Yellow icon/background, emphasized confirm button (publish, archive)
+  - `info`: Blue icon/background, emphasized confirm button (informational confirmations)
+  - `default`: Gray icon/background, standard styling
+- **Icons**: Theme-appropriate SVG icons (triangle for danger/warning, circle for info, question mark for default)
+- **Layout**: Modal centered with backdrop blur, responsive padding and sizing
+- **Buttons**: Quartz button component with configurable importance levels
+
+### Translation Support (Added 2024-10-16)
+All text properties in `ConfirmationDialogConfig` should now be translation keys:
+- `title`: Translation key for dialog title
+- `message`: Translation key for dialog message  
+- `confirmButtonText`: Translation key for confirm button (defaults to `shared.confirm`)
+- `cancelButtonText`: Translation key for cancel button (defaults to `shared.cancel`)
+- `filename`: Not translated - actual filename displayed with truncation
+
+The component automatically applies the `translate` pipe to all text in the template, ensuring consistent i18n support across all usages.
+
+### Screenshots
+- Warning theme dialog with yellow icon (publish confirmation)
+- Danger theme dialog with red icon (delete confirmation)
+- Info theme dialog with blue icon (framework update notification)
+- Loading state with disabled backdrop interaction
+
+### Notes
+- **Translation Pattern**: All callers should pass translation keys, not literal strings
+- **Backwards Compatible**: Default values use `shared.*` translation keys for fallback
+- **Design System Compliance**: Uses Quartz buttons and Vertex styling conventions
+- **Accessibility**: Full keyboard navigation, ARIA labels, focus management
+- **Processing State**: Prevents user interaction during async operations
+- **File Truncation**: Special handling for `{{fileName}}` placeholder with quote preservation
+- **Event Handling**: Emits `confirmed` with result object or `cancelled` for cancel actions
+- **Ready for Promotion**: Well-documented, tested, follows all Vertex patterns, now with full i18n support
+
+---
+
 ## VxDmExperienceSelector
 
 - **Project**: vertex-ui-disclosure-management

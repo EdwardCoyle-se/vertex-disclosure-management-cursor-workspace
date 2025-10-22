@@ -222,10 +222,13 @@ public interface IFrameworksCoreApi
 - [ ] 📋 Update to published SDK version when available
 
 #### Testing & Validation
-- [ ] 📋 Unit tests for BFF service methods
+- [x] ✅ Unit tests for BFF MediatR handlers (18 tests, all passing)
+  - [x] ✅ PublishReportCommandHandler tests (9 tests)
+  - [x] ✅ ValidateFrameworkVersionQueryHandler tests (9 tests)
+  - [x] ✅ Test error scenarios (404, 400, general exceptions)
+  - [x] ✅ Test framework version mismatch handling
+  - [x] ✅ Test edge cases (null values, empty strings, cancellation)
 - [ ] 📋 Integration tests for publish endpoints
-- [ ] 📋 Test error scenarios (already published, not found, etc.)
-- [ ] 📋 Test framework version mismatch handling
 - [ ] 📋 Verify authentication/authorization enforcement
 - [x] ✅ Manual testing with Core API (no 500 errors)
 - [x] ✅ Verify BFF starts and responds correctly
